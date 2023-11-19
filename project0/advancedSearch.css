@@ -1,0 +1,107 @@
+body {
+    font-family: arial, sans-serif;
+    color: black;
+}
+
+.grandparent {
+    border: 0px solid #33a45b;
+}
+
+.parent {
+    border: 0px solid white;
+}
+
+#parent2 {
+    border: 0px solid white;
+    display: inline-block;
+    width: 30vw;
+    padding: 10px;
+    font-size: 22px;
+    color: inherit;
+}
+
+#parent3 {
+    border: 1px solid white;
+    display: inline-block;
+    width: 30vw;
+    position: absolute;
+    left: 55vw;
+    padding: 10px;
+    font-size: 22px;
+    color: inherit;
+}
+
+h1 {
+    color: #33a45b;
+    text-align: left;
+    font-family: arial,sans-serif;
+    letter-spacing: 3px;
+    font-size: 35px;
+    margin-top: 80px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+
+.child {
+    border: inherit;
+    font-size: 16px;
+    height: fit-content;
+    color: inherit;
+}
+
+.grandchild1 {
+    border: inherit;
+    width: 400px;
+    height: 30px;
+    padding: 20px;
+    display: inline-block;
+}
+
+.grandchild2 {
+    display: inline-block;
+    width: 540px;
+    height: 60px;
+    border: inherit;
+    align-content: center;
+}
+
+.grandchild3 {
+    display: inline-block;
+    border: inherit;
+    width: fit-content;
+    height: 30px;
+    padding: 20px;
+    position: absolute;
+    left: 55vw;
+}
+
+.form_text {
+    height: 30px;
+    padding-left: 10px;
+    width: 500px;
+    border-radius: 5px;
+    background-color: #c9fcdb;
+    margin: 10px;
+}
+
+.form_text:focus-visible {
+    outline: 2px solid #33a45b;
+}
+
+.back_btn {
+    display: inline-block;
+    border: 1px solid white;
+    background: #33a45b;
+    position: absolute;
+    left: 80vw;
+    height: 40px;
+    width: 100px;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
