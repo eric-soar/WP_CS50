@@ -1,0 +1,26 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Create a new entry</h1>
+
+    <form  action="{% url 'encyclopedia:new_page' %}" method="post">
+        {% csrf_token %}
+        <p>Title of the new entry:</p>
+        <textarea id="new_title" name="new_title" rows="1" cols="60" placeholder="Write here the title of the new entry"></textarea>
+
+        <p>Content of the new entry written in markup language:</p>
+        <textarea id="new_content" name="new_content" rows="10" cols="60" placeholder="Write here the content of the new entry"></textarea>
+
+        <button type="submit">Save entry</button>
+        {% if entry_created %}
+        <span class="save_message">New entry created!</span>
+        {% elif incorrect %}
+        <span class="save_message">Could not create this entry, it already exists!</span>
+        {% endif %}
+    </form>
+
+{% endblock %}

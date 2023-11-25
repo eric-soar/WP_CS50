@@ -49,3 +49,30 @@ def search(request):
                 "matching_entry": matching_entry,
                 "match": match
             })
+
+def new_page(request):
+    entry_created = False
+    if request.method == "POST":
+        title = request.POST.get("new_title", "")
+        content = request.POST.get("new_content", "")
+
+        list_entries = util.list_entries()
+        if title in list_entries:
+            return render(request, "encyclopedia/new_page.html", {
+                "entry_created": entry_created,
+                "incorrect": True
+            })
+        else:
+            entry_created = True
+            filepath = f"entries/{title}.md"
+
+            with open(filepath, 'w') as file:
+                file.write("#" + title + "\n\n")
+                file.write(content)
+
+            return HttpResponseRedirect(reverse(f"encyclopedia:entry", kwargs={'name': title}))
+
+    return render(request, "encyclopedia/new_page.html", {
+        "entry_created": entry_created,
+        "incorrect": False
+    })

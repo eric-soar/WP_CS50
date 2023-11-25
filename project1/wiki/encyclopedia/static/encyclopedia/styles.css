@@ -13,8 +13,12 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
-    width: 80%;
+    display: block;
+}
+
+button {
+    display: inline-block;
+    margin-top: 10px;
 }
 
 .main {
@@ -35,4 +39,8 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.save_message {
+    margin-left: 10px;
 }
