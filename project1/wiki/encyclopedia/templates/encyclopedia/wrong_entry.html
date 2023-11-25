@@ -1,0 +1,12 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia - ERROR
+{% endblock %}
+
+{% block body %}
+    <h1>ERROR: WRONG ENTRY</h1>
+
+    <p>The entry that you have provided does not correspond to any entry in this encyclopedia database.</p>
+    <p>The wrong entry is: {{ wrong_entry }}</p>
+{% endblock %}

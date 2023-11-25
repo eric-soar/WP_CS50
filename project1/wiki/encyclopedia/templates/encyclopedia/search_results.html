@@ -1,0 +1,27 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia - Search results
+{% endblock %}
+
+{% block body %}
+    <h1>Search results</h1>
+
+    <p>"{{ wrong_entry }}" does not correspond to any entry in this encyclopedia.</p>
+
+    {% if match %}
+    <p>Related entries:</p>
+    <ul>
+        <li><a href="{{ matching_entry }} ">{{ matching_entry }} </a></li>
+    </ul>
+    {% else %}
+    <p>The entries of this encyclopedia are:</p>
+    <ul>
+        {% for entry in entries %}
+        <li><a href="{{ entry }}">{{ entry }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+{% endblock %}

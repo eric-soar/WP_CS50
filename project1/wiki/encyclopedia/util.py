@@ -1,7 +1,13 @@
 import re
+import markdown2
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+
+
+def convert_markdown(entry_path):
+    entry_html = markdown2.markdown_path(entry_path)
+    return entry_html
 
 
 def list_entries():
