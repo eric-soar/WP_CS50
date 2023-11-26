@@ -1,5 +1,6 @@
 import re
 import markdown2
+import numpy as np
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -41,3 +42,8 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def get_random_entry():
+    list = list_entries()
+    random = np.random.randint(0, len(list))
+    return list[random]

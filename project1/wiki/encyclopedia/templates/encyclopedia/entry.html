@@ -7,5 +7,9 @@
 {% block body %}
 
     {{ markdown|safe }}
-
+    <form action="{% url 'encyclopedia:edit' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="current_url" value="{{ request.path }}">
+        <button type="submit" name="edit">Edit</button>
+    </form>
 {% endblock %}
