@@ -5,3 +5,50 @@ body {
 .form-control {
     width: 40vw;
 }
+
+.listing_container {
+    border: 2px solid #a1a1a1;
+    margin: 10px 0px;
+    position: relative;
+    height: 300px;
+}
+
+.image_container {
+    display: inline-block;
+    margin-top: 10px;
+    position: absolute;
+    left: 5%;
+}
+
+.text_container {
+    display: inline-block;
+    height: 300px;
+    width: 300px;
+    margin-top: 10px;
+    position: absolute;
+    left: 30%;
+}
+
+h3 {
+    display: inline-block;
+}
+
+.create-listing-form p {
+    display: flex;
+    flex-direction: row;
+    width: 50vw;
+}
+
+p label {
+    width: 200px;
+}
+
+#id_name, #id_description, #id_price , #id_image {
+    margin-bottom: 15px;
+    flex: auto;
+}
+
+#id_description {
+    height: 100px;
+    width: 200px;
+}

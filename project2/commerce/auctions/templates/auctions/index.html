@@ -1,14 +1,27 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
+
 {% block body %}
     <h2>Active Listings</h2>
 
-    <ul>
-        {% for listing in listings %}
-        <li>{{ listing.name }}</li>
-        <p>Description: {{ listing.description }}</p>
-        <p>Price: {{ listing.price }}</p>
-        <p>Listed by: {{ listing.listed_by }}</p>
-        {% endfor %}
-    </ul>
+    {% for listing in listings %}
+    <div class="listing_container">
+        <div class="image_container">
+            {% if listing.image %}
+            <img src="{{ listing.image.url }}" alt="{{ listing.name }} Image" style="max-width: 300px; max-height: 250px;">
+            {% else %}
+            <img src="{% static 'images/no_photo.jpg' %}" alt="No photo" style="max-width: 300px; max-height: 250px;">
+            {% endif %}
+        </div>
+
+        <div class="text_container">
+            <h3>{{ listing.name }}</h3>
+            <p><strong>Price</strong>: ${{ listing.price }}</p>
+            <p>{{ listing.description }}</p>
+            <p>Listed by: {{ listing.listed_by }}</p>
+        </div>
+    </div>
+
+    {% endfor %}
 {% endblock %}

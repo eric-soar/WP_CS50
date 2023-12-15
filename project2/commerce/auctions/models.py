@@ -12,6 +12,8 @@ class Listing(models.Model):
     listed_by = models.CharField(max_length=64)
     category = models.CharField(max_length=64)
 
+    image = models.ImageField(upload_to='images/', null=True, blank=True, default='images/no_photo.jpg')
+
     def __str__(self):
         return f"{self.id}: {self.name} at price {self.price}"
 

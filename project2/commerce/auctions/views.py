@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from .forms import CreateListingForm
+from django.contrib import messages
 
 from .models import User, Listing, Bid, Comment
 
@@ -73,23 +75,27 @@ def create_listing(request):
     message = None
 
     if request.method == "POST":
-        list_name = request.POST["name"]
-        list_description = request.POST["description"]
-        list_price = request.POST["price"]
-        listed_by = request.user
-        default_category = "Non"
+        form = CreateListingForm(request.POST, request.FILES)
 
-        listing = Listing(
-            name=list_name,
-            description=list_description,
-            price=list_price,
-            listed_by=listed_by.username,
-            category=default_category,
-        )
+        if form.is_valid():
 
-        listing.save()  # Save the listing to the database
-        message = "Listing created!"
+            listing = Listing(
+                name=form.cleaned_data['name'],
+                description=form.cleaned_data['description'],
+                price=form.cleaned_data['price'],
+                image=form.cleaned_data['image'],
+                listed_by=request.user,
+                category="Non",
+            )
+
+            listing.save()  # Save the listing to the database
+            message = "Listing created!"
+        else:
+            messages.error(request, "Error creating the listing. Please check the form.")
+    else:
+        form = CreateListingForm()
 
     return render(request, "auctions/create_listing.html", {
-        "message": message
+        "message": message,
+        "form": form
     })
