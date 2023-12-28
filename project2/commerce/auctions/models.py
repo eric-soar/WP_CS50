@@ -2,9 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class User(AbstractUser):
-    pass
-
 class Listing(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=256)
@@ -26,4 +23,6 @@ class Comment(models.Model):
     comment = models.TextField(max_length=256)
 
 
+class User(AbstractUser):
+    watched_listings = models.ManyToManyField(Listing, blank=True, related_name="watchers")
 

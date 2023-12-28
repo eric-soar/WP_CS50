@@ -72,8 +72,14 @@ def register(request):
 
 def listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
+    message = None
+    if request.method == "POST":
+        request.user.watched_listings.add(listing)
+        message = "Successfully added to the watchlist!"
+
     return render(request, "auctions/listing.html", {
-        "listing": listing
+        "listing": listing,
+        "message": message
     })
 
 
@@ -104,4 +110,16 @@ def create_listing(request):
     return render(request, "auctions/create_listing.html", {
         "message": message,
         "form": form
+    })
+
+def watchlist(request):
+
+    if request.method == "POST":
+        list_rem = request.POST.get('listing_id')
+        request.user.watched_listings.remove(list_rem)
+
+    wl_listings = request.user.watched_listings.all()
+    return render(request, "auctions/watchlist.html", {
+        "user_name": request.user.username,
+        "watchlist": wl_listings
     })

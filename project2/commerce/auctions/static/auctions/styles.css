@@ -61,3 +61,8 @@ p label {
 .listing-price {
     font-size: 40px;
 }
+
+.dlt-btn {
+    background-color: red;
+    display: inline;
+}
