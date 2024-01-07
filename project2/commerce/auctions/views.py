@@ -74,6 +74,7 @@ def listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     message = None
     bidder = False
+    listing_owner = False
 
     if request.method == "POST":
         action = request.POST.get("action", None)
@@ -96,16 +97,26 @@ def listing(request, listing_id):
 
                 listing.price = amount
                 listing.save()
+        elif action == "Close bid":
+            last_bid = listing.listing_bids.order_by('amount').last()
+            listing.active = False
+            listing.winner = last_bid.bidder if last_bid else "No winner"
+            listing.save()
 
     last_bid = listing.listing_bids.order_by('amount').last()
     if last_bid and last_bid.bidder == request.user.username:
         bidder = True
     bidnum = listing.listing_bids.count()
+
+    if request.user.username == listing.listed_by:
+        listing_owner = True
+
     return render(request, "auctions/listing.html", {
         "listing": listing,
         "message": message,
         "number_bids": bidnum,
-        "bidder": bidder
+        "bidder": bidder,
+        "listing_owner": listing_owner,
     })
 
 
@@ -118,6 +129,7 @@ def create_listing(request):
         if form.is_valid():
 
             listing = Listing(
+                active=True,
                 name=form.cleaned_data['name'],
                 description=form.cleaned_data['description'],
                 price=form.cleaned_data['price'],

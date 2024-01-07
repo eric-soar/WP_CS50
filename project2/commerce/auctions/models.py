@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Listing(models.Model):
+    active = models.BooleanField(default=True)
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=256)
     price = models.FloatField(max_length=64)
@@ -11,6 +12,7 @@ class Listing(models.Model):
 
     image = models.ImageField(upload_to='images/', null=True, blank=True, default='images/no_photo.jpg')
 
+    winner = models.CharField(max_length=64, default="No winner")
     def __str__(self):
         return f"{self.id}: {self.name} at price {self.price}"
 

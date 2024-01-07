@@ -4,13 +4,22 @@
 
 {% block body %}
     <h2>Listing: {{ listing.name }}</h2>
+
     {% if listing.image %}
         <img src="{{ listing.image.url }}" alt="{{ listing.name }}" style="height: 300px; max-width: 80vw">
     {% else %}
         <img src="{% static 'images/no_photo.jpg' %}" alt="No photo" style="height: 300px; max-width: 80vw">
     {% endif %}
+
     <p class="listing-desc">{{ listing.description }}</p>
     <p class="listing-price"><strong>${{ listing.price }}</strong></p>
+
+    {% if listing_owner %}
+        <form class="input-group mb-3" action="{% url 'listing' listing.id %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-outline-secondary" type="submit" name="action" value="Close bid">
+        </form>
+    {% endif %}
 
     <h3>Bids:</h3>
     <p>{{ number_bids }} bid(s) so far.
@@ -18,11 +27,16 @@
         Your bid is the current bid.
         {% endif %}
     </p>
-    <form class="input-group mb-3" style="width: 50vw" action="{% url 'listing' listing.id %}" method="post">
-        {% csrf_token %}
-        <input class="form-control" type="number" name="amount" placeholder="Bid">
-        <input class="btn btn-outline-secondary" type="submit" name="action" value="Place bid">
-    </form>
+
+    {% if listing.active %}
+        <form class="input-group mb-3" style="width: 50vw" action="{% url 'listing' listing.id %}" method="post">
+            {% csrf_token %}
+            <input class="form-control" type="number" name="amount" placeholder="Bid">
+            <input class="btn btn-outline-secondary" type="submit" name="action" value="Place bid">
+        </form>
+    {% else %}
+        <h3>The bid is closed. Winner: <strong>{{ listing.winner }}</strong></h3>
+    {% endif %}
 
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
