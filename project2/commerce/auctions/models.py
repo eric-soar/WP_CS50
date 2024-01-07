@@ -14,9 +14,15 @@ class Listing(models.Model):
     def __str__(self):
         return f"{self.id}: {self.name} at price {self.price}"
 
+
 class Bid(models.Model):
-    author = models.CharField(max_length=64)
-    money = models.FloatField(max_length=64)
+    bidder = models.CharField(max_length=64)
+    amount = models.FloatField(max_length=64)
+
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='listing_bids', default=1)
+
+    def __str__(self):
+        return f"{self.id}: ${self.amount} by {self.bidder}"
 
 class Comment(models.Model):
     user = models.CharField(max_length=64)

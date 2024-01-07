@@ -73,13 +73,39 @@ def register(request):
 def listing(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
     message = None
-    if request.method == "POST":
-        request.user.watched_listings.add(listing)
-        message = "Successfully added to the watchlist!"
+    bidder = False
 
+    if request.method == "POST":
+        action = request.POST.get("action", None)
+        if action == "Add to watchlist":
+            request.user.watched_listings.add(listing)
+            message = "Successfully added to the watchlist!"
+        elif action == "Place bid":
+            amount = float(request.POST.get("amount", None))
+            if amount <= listing.price:
+                message = "ERROR: The bid should be greater than the current bid!"
+            else:
+                bid = Bid(
+                    bidder=request.user,
+                    amount=amount,
+                    listing=listing
+                )
+
+                bid.save()
+                message = "Bid created!"
+
+                listing.price = amount
+                listing.save()
+
+    last_bid = listing.listing_bids.order_by('amount').last()
+    if last_bid and last_bid.bidder == request.user.username:
+        bidder = True
+    bidnum = listing.listing_bids.count()
     return render(request, "auctions/listing.html", {
         "listing": listing,
-        "message": message
+        "message": message,
+        "number_bids": bidnum,
+        "bidder": bidder
     })
 
 

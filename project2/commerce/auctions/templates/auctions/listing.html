@@ -11,9 +11,22 @@
     {% endif %}
     <p class="listing-desc">{{ listing.description }}</p>
     <p class="listing-price"><strong>${{ listing.price }}</strong></p>
+
+    <h3>Bids:</h3>
+    <p>{{ number_bids }} bid(s) so far.
+        {% if bidder %}
+        Your bid is the current bid.
+        {% endif %}
+    </p>
+    <form class="input-group mb-3" style="width: 50vw" action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+        <input class="form-control" type="number" name="amount" placeholder="Bid">
+        <input class="btn btn-outline-secondary" type="submit" name="action" value="Place bid">
+    </form>
+
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <input class="btn btn-primary" type="submit" value="Add to watchlist">
+        <input class="btn btn-primary" type="submit" name="action" value="Add to watchlist">
         {% if message %}
         {{ message }}
         {% endif %}
