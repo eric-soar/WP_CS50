@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import CreateListingForm
+from .forms import CreateListingForm, CreateCommentForm
 from django.contrib import messages
 
 from .models import User, Listing, Bid, Comment
@@ -75,6 +75,7 @@ def listing(request, listing_id):
     message = None
     bidder = False
     listing_owner = False
+    comment_form = CreateCommentForm()
 
     if request.method == "POST":
         action = request.POST.get("action", None)
@@ -102,6 +103,16 @@ def listing(request, listing_id):
             listing.active = False
             listing.winner = last_bid.bidder if last_bid else "No winner"
             listing.save()
+        elif action == "Post comment":
+            form = CreateCommentForm(request.POST)
+
+            if form.is_valid():
+                comment = Comment(
+                    user=request.user.username,
+                    comment=form.cleaned_data['text']
+                )
+
+                comment.save()
 
     last_bid = listing.listing_bids.order_by('amount').last()
     if last_bid and last_bid.bidder == request.user.username:
@@ -117,6 +128,7 @@ def listing(request, listing_id):
         "number_bids": bidnum,
         "bidder": bidder,
         "listing_owner": listing_owner,
+        "comment_form": comment_form
     })
 
 

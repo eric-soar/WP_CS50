@@ -45,4 +45,8 @@
         {{ message }}
         {% endif %}
     </form>
+
+    {{ comment_form.as_p }}
+    <input class="btn btn-secondary" type="submit" name="action" value="Post comment">
+
 {% endblock %}

@@ -21,7 +21,7 @@ class Bid(models.Model):
     bidder = models.CharField(max_length=64)
     amount = models.FloatField(max_length=64)
 
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='listing_bids', default=1)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='listing_bids', null=True, blank=True)
 
     def __str__(self):
         return f"{self.id}: ${self.amount} by {self.bidder}"
@@ -30,6 +30,10 @@ class Comment(models.Model):
     user = models.CharField(max_length=64)
     comment = models.TextField(max_length=256)
 
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='listing_comments', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id}: User ${self.user} commented: {self.comment}"
 
 class User(AbstractUser):
     watched_listings = models.ManyToManyField(Listing, blank=True, related_name="watchers")

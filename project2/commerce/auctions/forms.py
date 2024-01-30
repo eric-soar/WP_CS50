@@ -13,3 +13,6 @@ class CreateListingForm(forms.Form):
             return price
         except ValueError:
             raise forms.ValidationError("Enter a valid number for the price.")
+
+class CreateCommentForm(forms.Form):
+    text = forms.CharField(label="Comment", widget=forms.Textarea)
